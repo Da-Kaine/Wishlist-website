@@ -129,112 +129,217 @@
     margin-bottom: 14px;
   }
 
-  /* ─── Link Preview ──────────────────────────────────────── */
+  /* ─── Add Item Form ─────────────────────────────────────── */
+
+  /* Main input row: text field + add button side by side */
+  .form-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  /* Input wrapper gives us the focus ring around the whole row */
+  .form-input-wrap {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+  }
+
+  .form-input-wrap .item-input {
+    width: 100%;
+    padding: 13px 40px 13px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 0.97rem;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .form-input-wrap .item-input::placeholder { color: var(--gray); font-size: 0.88rem; }
+  .form-input-wrap .item-input:focus {
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.14);
+  }
+  .form-input-wrap .item-input.input-error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(231,76,60,0.12);
+  }
+
+  /* Small clear-× inside the input when it has text */
+  .input-clear-btn {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--gray);
+    font-size: 0.85rem;
+    line-height: 1;
+    padding: 4px;
+    border-radius: 4px;
+    display: none;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .input-clear-btn:hover { color: var(--text); background: var(--light); }
+  .form-input-wrap:has(.item-input:not(:placeholder-shown)) .input-clear-btn { display: flex; align-items: center; }
+
+  /* Add button — sits flush right */
+  .add-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 18px;
+    height: 48px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.97rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(255,107,107,0.32);
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .add-btn:hover {
+    background: var(--primary-dark);
+    box-shadow: 0 6px 18px rgba(255,107,107,0.42);
+    transform: translateY(-1px);
+  }
+  .add-btn:active { transform: scale(0.96); }
+  .add-btn .btn-text { display: flex; align-items: center; gap: 5px; }
+
+  /* Error message */
+  .error-msg {
+    font-size: 0.76rem;
+    color: var(--danger);
+    margin: 2px 0 6px 2px;
+    display: none;
+  }
+  .error-msg.visible { display: block; }
+
+  /* ─── Link Preview Card ──────────────────────────────────── */
   .link-preview {
     display: none;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 10px 12px;
     background: var(--bg);
     border: 1.5px solid var(--secondary);
     border-radius: var(--radius-sm);
-    margin-top: 8px;
-    animation: slideUp 0.25s ease both;
+    margin-top: 10px;
+    animation: slideUp 0.22s ease both;
+    position: relative;
   }
   .link-preview.show { display: flex; }
-  .link-preview.loading .lp-img-wrap { background: var(--light); }
-  .link-preview.loading .lp-title { color: var(--gray); font-style: italic; }
 
+  /* Thumbnail */
   .lp-img-wrap {
-    width: 44px; height: 44px;
-    border-radius: 8px;
+    width: 42px;
+    height: 42px;
+    border-radius: 7px;
     background: var(--light);
     flex-shrink: 0;
     overflow: hidden;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
   }
   .lp-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
+  /* Text body */
   .lp-body { flex: 1; min-width: 0; }
   .lp-title {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 1.3;
   }
+  .link-preview.loading .lp-title { color: var(--gray); font-style: italic; }
   .lp-url {
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     color: var(--gray);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-top: 2px;
   }
+
+  /* Dismiss ✕ */
   .lp-dismiss {
+    flex-shrink: 0;
     background: none;
     border: none;
     cursor: pointer;
     color: var(--gray);
-    font-size: 1rem;
-    padding: 4px;
+    font-size: 0.9rem;
+    padding: 5px;
+    border-radius: 5px;
     line-height: 1;
-    border-radius: 4px;
-    flex-shrink: 0;
+    transition: color 0.15s ease, background 0.15s ease;
   }
   .lp-dismiss:hover { color: var(--danger); background: rgba(231,76,60,0.08); }
 
-  @keyframes lp-pulse {
-    0%, 100% { opacity: 0.5; }
-    50%       { opacity: 1; }
-  }
-  .lp-spinner { animation: lp-pulse 1.2s ease infinite; }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
+  @keyframes lp-pulse { 0%,100%{opacity:.45} 50%{opacity:1} }
+  .lp-spinner { animation: lp-pulse 1.1s ease infinite; }
 
-  .form-row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  @media (max-width: 400px) {
-    .form-row-2 { grid-template-columns: 1fr; }
-  }
-
+  /* ─── Advanced Options Drawer ────────────────────────────── */
   .adv-toggle {
     display: inline-flex;
     align-items: center;
     gap: 5px;
     background: none;
     border: none;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     font-weight: 600;
     color: var(--gray);
     cursor: pointer;
-    padding: 6px 0;
+    padding: 8px 0 4px;
     font-family: inherit;
-    transition: var(--transition);
-    margin-top: 4px;
+    transition: color 0.2s ease;
+    letter-spacing: 0.01em;
   }
   .adv-toggle:hover { color: var(--secondary); }
-  .adv-toggle .adv-arrow { font-size: 0.65rem; transition: transform 0.25s ease; display: inline-block; }
+  .adv-toggle .adv-arrow {
+    font-size: 0.6rem;
+    transition: transform 0.25s ease;
+    display: inline-block;
+    margin-left: 1px;
+  }
   .adv-toggle.open .adv-arrow { transform: rotate(180deg); }
 
   .adv-body {
     overflow: hidden;
     max-height: 0;
     opacity: 0;
-    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.25s ease;
     margin-top: 0;
   }
   .adv-body.open { max-height: 1200px; opacity: 1; margin-top: 10px; }
+
+  /* Two-col grid inside the drawer */
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 400px) { .form-row-2 { grid-template-columns: 1fr; } }
 
   input, select {
     width: 100%;
@@ -265,7 +370,7 @@
     padding-right: 36px;
   }
 
-  .input-error { border-color: var(--danger) !important; }
+  .input-error { border-color: var(--danger) !important; box-shadow: 0 0 0 3px rgba(231,76,60,0.12) !important; }
 
   .error-msg {
     color: var(--danger);
@@ -356,51 +461,34 @@
     animation: spin 0.7s linear infinite;
   }
 
-  /* ─── Filter Buttons ────────────────────────────────────── */
-  .inline-filter-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: 8px -22px 0;
-    padding: 0 22px 12px;
-  }
-  .inline-filter-scroll::-webkit-scrollbar { display: none; }
-
-  .inline-filters {
+  /* ─── Toolbar ───────────────────────────────────────────── */
+  .toolbar-wrap {
     display: flex;
     align-items: center;
-    gap: 5px;
-    /* no min-width: max-content — let it wrap if needed */
+    gap: 0;
+    padding: 8px 0 10px;
+    overflow: visible;
+    position: relative;
   }
 
-  .inline-add-btn {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    font-family: inherit;
-    cursor: pointer;
-    background: var(--primary);
-    color: white;
-    border: none;
-    min-height: 30px;
+  /* Fixed anchor — always visible, left side */
+  .toolbar-anchor {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     flex-shrink: 0;
-    transition: var(--transition);
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(255,107,107,0.3);
-  }
-  .inline-add-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
-  .inline-add-btn:active { transform: scale(0.96); }
-
-  .inline-divider {
-    width: 1px;
-    height: 18px;
-    background: var(--border);
-    flex-shrink: 0;
-    margin: 0 1px;
+    padding-right: 8px;
+    border-right: 1.5px solid var(--border);
+    margin-right: 8px;
+    position: relative;
+    z-index: 2;
+    background: var(--card-bg);
   }
 
-  .filter-btn {
+  .tool-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     padding: 5px 10px;
     border-radius: 20px;
     font-size: 0.78rem;
@@ -408,29 +496,72 @@
     font-family: inherit;
     cursor: pointer;
     border: 1.5px solid var(--border);
-    background: transparent;
+    background: var(--bg);
     color: var(--text-secondary);
     transition: var(--transition);
     white-space: nowrap;
-    min-height: 30px;
     flex-shrink: 0;
   }
+  .tool-btn:hover  { border-color: var(--secondary); color: var(--secondary); }
+  .tool-btn.active { background:var(--secondary); border-color:var(--secondary); color:white; box-shadow:0 2px 8px rgba(78,205,196,.28); }
+  .tool-btn.select-active { background:var(--primary); border-color:var(--primary); color:white; }
 
-  .filter-btn:hover { border-color: var(--secondary); color: var(--secondary); }
+  /* Scrollable chip area */
+  .toolbar-scroll-area {
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .toolbar-scroll-area::-webkit-scrollbar { display: none; }
 
-  .filter-btn.active {
-    background: var(--secondary);
-    border-color: var(--secondary);
-    color: white;
-    box-shadow: 0 2px 8px rgba(78,205,196,0.3);
+  .toolbar-panel {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: max-content;
+    padding: 1px 0;
   }
 
-  /* Category active colors */
-  .filter-btn[data-cat="Groceries"].active   { background:#FF6B6B; border-color:#FF6B6B; box-shadow:0 2px 8px rgba(255,107,107,.3); }
-  .filter-btn[data-cat="Household"].active   { background:#9B59B6; border-color:#9B59B6; box-shadow:0 2px 8px rgba(155,89,182,.3); }
-  .filter-btn[data-cat="Health"].active      { background:#2ECC71; border-color:#2ECC71; box-shadow:0 2px 8px rgba(46,204,113,.3); }
-  .filter-btn[data-cat="Electronics"].active { background:#3498DB; border-color:#3498DB; box-shadow:0 2px 8px rgba(52,152,219,.3); }
-  .filter-btn[data-cat="Other"].active       { background:#95A5A6; border-color:#95A5A6; box-shadow:0 2px 8px rgba(149,165,166,.3); }
+  .tp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 11px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text-secondary);
+    transition: var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .tp-chip:hover  { border-color: var(--secondary); color: var(--secondary); }
+  .tp-chip.active { background:var(--secondary); border-color:var(--secondary); color:white; box-shadow:0 2px 6px rgba(78,205,196,.25); }
+  .tp-chip-green  { border-color: var(--success); color: var(--success); }
+  .tp-chip-green:hover { background: var(--success); color: white; }
+  .tp-chip-red    { border-color: var(--danger); color: var(--danger); }
+  .tp-chip-red:hover   { background: var(--danger); color: white; }
+  .tp-chip-teal   { border-color: var(--secondary); color: var(--secondary); }
+  .tp-chip-teal:hover  { background: var(--secondary); color: white; }
+
+  /* ─── Priority badges ────────────────────────────────────── */
+  .priority-badge {
+    font-size: 0.66rem;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 8px;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .pri-high   { background: rgba(231,76,60,.15);  color: var(--danger); }
+  .pri-normal { display: none; } /* normal = no badge */
+  .pri-low    { background: rgba(149,165,166,.15); color: var(--gray); }
 
   /* ─── Sticky items header ────────────────────────────────── */
   .items-card {
@@ -486,6 +617,24 @@
 
   /* ─── Items ─────────────────────────────────────────────── */
   .items-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+
+  .sel-box {
+    width: 24px; height: 24px;
+    border-radius: 6px;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+  }
+  .sel-box.checked {
+    background: var(--secondary);
+    border-color: var(--secondary);
+  }
+  .sel-box svg { opacity: 0; }
+  .sel-box.checked svg { opacity: 1; }
 
   .item { position: relative; }
 
@@ -565,32 +714,6 @@
     border-color: transparent;
   }
 
-  /* Custom Checkbox */
-  .item-checkbox { position: relative; flex-shrink: 0; }
-
-  .item-checkbox input {
-    position: absolute; opacity: 0; width: 0; height: 0;
-  }
-
-  .check-box {
-    width: 22px; height: 22px;
-    border-radius: 6px;
-    border: 2px solid var(--border);
-    background: var(--card-bg);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-    flex-shrink: 0;
-  }
-
-  .item-checkbox input:checked + .check-box {
-    background: var(--success);
-    border-color: var(--success);
-    animation: checkPop 0.3s ease;
-  }
-
-  .check-box svg { opacity: 0; transition: opacity 0.2s; }
-  .item-checkbox input:checked + .check-box svg { opacity: 1; }
 
   .item-image {
     width: 46px; height: 46px;
@@ -765,19 +888,75 @@
   .collapsible.collapsed { max-height: 0 !important; opacity: 0; }
 
   /* ─── Progress bar ──────────────────────────────────────── */
-  .progress-bar-wrap {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    margin-bottom: 14px;
-    overflow: hidden;
+
+
+
+  /* ─── Settings ─────────────────────────────────────────── */
+  .settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
   }
-  .progress-bar {
-    height: 100%;
-    background: linear-gradient(90deg, var(--secondary), var(--success));
-    border-radius: 2px;
-    transition: width 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { flex: 1; min-width: 0; }
+  .settings-title { display: block; font-size: 0.88rem; font-weight: 600; color: var(--text); }
+  .settings-desc  { display: block; font-size: 0.75rem; color: var(--gray); margin-top: 2px; }
+
+  .toggle-switch { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-track {
+    position: absolute; inset: 0;
+    background: var(--border); border-radius: 12px;
+    cursor: pointer; transition: background 0.25s ease;
   }
+  .toggle-track::after {
+    content: ''; position: absolute;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: white; top: 3px; left: 3px;
+    transition: transform 0.25s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  }
+  .toggle-switch input:checked + .toggle-track { background: var(--success); }
+  .toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+
+  /* ─── Undo snackbar ─────────────────────────────────────── */
+  @keyframes undoIn  { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes undoOut { to   { opacity:0; transform:translateY(20px); } }
+  .undo-bar {
+    position: fixed;
+    bottom: 24px;
+    right: 16px;
+    z-index: 9999;
+    background: var(--dark);
+    color: white;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.82rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    animation: undoIn 0.25s ease both;
+    max-width: 280px;
+  }
+  .undo-bar.out { animation: undoOut 0.25s ease forwards; }
+  .undo-bar button {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .undo-bar button:hover { filter: brightness(1.1); }
 
   /* ─── Scrollbar ─────────────────────────────────────────── */
   ::-webkit-scrollbar       { width: 6px; height: 6px; }
@@ -952,10 +1131,11 @@
     font-size: 0.82rem;
     font-weight: 600;
     font-family: inherit;
-    padding: 8px 12px;
+    padding: 8px 10px;
     cursor: pointer;
     transition: var(--transition);
-    white-space: nowrap;
+    width: 36px; height: 36px;
+    display:flex; align-items:center; justify-content:center;
   }
   .sheet-refresh-btn:hover { background: var(--secondary); color: white; }
   .sheet-refresh-btn:disabled { opacity: 0.5; cursor: default; }
@@ -1002,6 +1182,23 @@
   .sheet-save-btn:hover  { background: var(--primary-dark); transform: translateY(-1px); }
   .sheet-save-btn:active { transform: scale(0.97); }
 
+
+  .sheet-cancel-btn {
+    background: var(--danger);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.95rem;
+    font-weight: 700;
+    font-family: inherit;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 52px;
+    box-shadow: 0 4px 12px rgba(231,76,60,0.3);
+  }
+  .sheet-cancel-btn:hover { background: var(--danger-dark); }
+  .sheet-cancel-btn:active { transform: scale(0.97); }
   .sheet-del-btn {
     background: transparent;
     color: var(--danger);
@@ -1018,6 +1215,25 @@
   .sheet-del-btn:hover { border-color: var(--danger); background: rgba(231,76,60,0.07); }
 
   /* make item-body clickable */
+
+  .price-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 8px;
+    background: rgba(46,204,113,.13);
+    color: var(--success-dark);
+    white-space: nowrap;
+  }
+  .sheet-price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--success-dark);
+    margin-bottom: 10px;
+  }
   .sheet-date-added {
     display: flex;
     align-items: center;
@@ -1039,6 +1255,50 @@
     color: var(--gray);
     font-size: 0.78rem;
   }
+
+  /* ─── Undo bar ───────────────────────────────────────────── */
+  #undo-bar {
+    position: fixed;
+    bottom: 80px;
+    right: 16px;
+    background: var(--dark);
+    color: white;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.3);
+    z-index: 999;
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.3s cubic-bezier(.25,.46,.45,.94), opacity 0.3s ease;
+    pointer-events: none;
+    max-width: 280px;
+  }
+  #undo-bar.show {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #undo-bar span { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #undo-bar button {
+    background: var(--secondary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  #undo-bar button:hover { background: var(--secondary-dark); }
+
 </style>
 </head>
 <body>
@@ -1054,26 +1314,36 @@
 
   <!-- ── Add Item ─────────────────────────────────────── -->
   <section class="card anim-form" aria-label="Add item form">
-    <p class="card-title">Add New Item</p>
+    <p class="card-title">Add Item</p>
 
     <div class="form-row">
-      <input type="text" id="item-name" placeholder="Item name or paste a URL…"
-             maxlength="200" autocomplete="off" autocorrect="off" spellcheck="false"
-             aria-label="Item name or URL" oninput="onNameInput()">
-      <button class="btn btn-primary" id="add-btn" onclick="handleAddItem()" style="width:auto;padding:12px 18px;" aria-label="Add item">
-        <span class="btn-text">＋ Add</span>
+      <div class="form-input-wrap">
+        <input class="item-input" type="text" id="item-name"
+               placeholder="Item name or paste a URL…"
+               maxlength="200" autocomplete="off" autocorrect="off" spellcheck="false"
+               aria-label="Item name or URL" oninput="onNameInput()">
+        <button class="input-clear-btn" onclick="clearNameInput()" tabindex="-1" aria-label="Clear">✕</button>
+      </div>
+      <button class="add-btn" id="add-btn" onclick="handleAddItem()" aria-label="Add item">
+        <span class="btn-text">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+          Add
+        </span>
       </button>
     </div>
+
     <p class="error-msg" id="name-error">Please enter an item name or URL.</p>
 
-    <!-- Link preview card -->
+    <!-- Link preview card — appears when a URL is detected -->
     <div class="link-preview" id="link-preview">
       <div class="lp-img-wrap" id="lp-img-wrap">🔗</div>
       <div class="lp-body">
         <div class="lp-title" id="lp-title">Fetching…</div>
         <div class="lp-url"   id="lp-url"></div>
       </div>
-      <button class="lp-dismiss" onclick="dismissLinkPreview()" title="Clear">✕</button>
+      <button class="lp-dismiss" onclick="dismissLinkPreview()" title="Clear" aria-label="Dismiss preview">✕</button>
     </div>
 
     <button class="adv-toggle" id="adv-toggle" onclick="toggleAdv()" type="button" aria-expanded="false">
@@ -1081,13 +1351,24 @@
     </button>
 
     <div class="adv-body" id="adv-body">
-      <select id="item-category" aria-label="Category" style="width:100%;">
-        <option value="Electronics">⚡ Electronics</option>
-        <option value="Household">🏠 Household</option>
-        <option value="Health">💊 Health &amp; Beauty</option>
-        <option value="Groceries">🥦 Groceries</option>
-        <option value="Other" selected>📦 Other</option>
-      </select>
+      <div class="form-row-2">
+        <select id="item-category" aria-label="Category">
+          <option value="Electronics">⚡ Electronics</option>
+          <option value="Clothes">👕 Clothes</option>
+          <option value="Household">🏠 Household</option>
+          <option value="Health">💊 Health &amp; Beauty</option>
+          <option value="Groceries">🥦 Groceries</option>
+          <option value="Other" selected>📦 Other</option>
+        </select>
+        <select id="item-priority" aria-label="Priority">
+          <option value="urgent">🚨 Urgent</option>
+          <option value="high">🔴 High</option>
+          <option value="normal" selected>🔵 Normal</option>
+          <option value="low">⚪ Low</option>
+        </select>
+      </div>
+      <input type="text" id="item-price" placeholder="💰 Price (optional, e.g. $29.99)"
+             autocomplete="off" aria-label="Price" style="margin-top:10px;">
     </div>
   </section>
 
@@ -1109,21 +1390,71 @@
         </div>
       </div>
 
-      <!-- Inline filter + add pills -->
-      <div class="inline-filter-scroll">
-        <div class="inline-filters" id="filters">
-          <button class="filter-btn active" data-cat="all"         onclick="setFilter('all')">All</button>
-          <button class="filter-btn"        data-cat="Electronics" onclick="setFilter('Electronics')">⚡ Electronics</button>
-          <button class="filter-btn"        data-cat="Household"   onclick="setFilter('Household')">🏠 Household</button>
-          <button class="filter-btn"        data-cat="Health"      onclick="setFilter('Health')">💊 Health</button>
-          <button class="filter-btn"        data-cat="Groceries"   onclick="setFilter('Groceries')">🥦 Grocery</button>
-          <button class="filter-btn"        data-cat="Other"       onclick="setFilter('Other')">📦 Other</button>
+      <!-- Toolbar: fixed anchor + horizontally scrolling filter chips -->
+      <div class="toolbar-wrap" id="toolbar-wrap">
+        <!-- Fixed anchor buttons (always visible) -->
+        <div class="toolbar-anchor">
+          <button class="tool-btn" id="sort-btn" onclick="openPanel('sort')" aria-label="Sort">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+            <span>Sort<span id="sort-label"></span></span>
+          </button>
+          <button class="tool-btn" id="type-btn" onclick="openPanel('type')" aria-label="Filter">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <path d="M1 2h12l-5 6v4l-2-1V8L1 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span id="type-label">All</span>
+          </button>
+          <button class="tool-btn" id="select-btn" onclick="toggleSelectMode()" aria-label="Select items">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+              <rect x="1" y="1" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M4 7l2.5 2.5L10 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Select</span>
+          </button>
+        </div>
+
+        <!-- Horizontally scrollable panel area -->
+        <div class="toolbar-scroll-area" id="toolbar-scroll">
+          <!-- Sort panel (hidden by default) -->
+          <div class="toolbar-panel" id="panel-sort" style="display:none;">
+            <button class="tp-chip" data-sort="default"  onclick="sortChipClick('default')">🔀 Default</button>
+            <button class="tp-chip" data-sort="priority" onclick="sortChipClick('priority')">🔥 Priority</button>
+            <button class="tp-chip" data-sort="name"     onclick="sortChipClick('name')">🔤 A–Z</button>
+            <button class="tp-chip" data-sort="date"     onclick="sortChipClick('date')">🕐 Date</button>
+            <button class="tp-chip" data-sort="price"    onclick="sortChipClick('price')">💰 Price</button>
+          </div>
+          <!-- Type panel (hidden by default) -->
+          <div class="toolbar-panel" id="panel-type" style="display:none;">
+            <button class="tp-chip" data-cat="all"         onclick="typeChipClick('all')">All</button>
+            <button class="tp-chip" data-cat="Electronics" onclick="typeChipClick('Electronics')">⚡ Electronics</button>
+            <button class="tp-chip" data-cat="Clothes"     onclick="typeChipClick('Clothes')">👕 Clothes</button>
+            <button class="tp-chip" data-cat="Household"   onclick="typeChipClick('Household')">🏠 Household</button>
+            <button class="tp-chip" data-cat="Health"      onclick="typeChipClick('Health')">💊 Health</button>
+            <button class="tp-chip" data-cat="Groceries"   onclick="typeChipClick('Groceries')">🥦 Groceries</button>
+            <button class="tp-chip" data-cat="Other"       onclick="typeChipClick('Other')">📦 Other</button>
+            <button class="tp-chip" data-cat="__link__"    onclick="typeChipClick('__link__')">🔗 Has URL</button>
+            <button class="tp-chip" data-cat="__nolink__"  onclick="typeChipClick('__nolink__')">🚫 No URL</button>
+            <button class="tp-chip" data-cat="__amazon__"  onclick="typeChipClick('__amazon__')">🛒 Amazon</button>
+            <button class="tp-chip" data-cat="__aliexpress__" onclick="typeChipClick('__aliexpress__')">🌐 AliExpress</button>
+            <button class="tp-chip" data-cat="__dollartree__" onclick="typeChipClick('__dollartree__')">🌳 Dollar Tree</button>
+            <button class="tp-chip" data-cat="__walmart__"  onclick="typeChipClick('__walmart__')">🏪 Walmart</button>
+            <button class="tp-chip" data-cat="__other_shop__" onclick="typeChipClick('__other_shop__')">🏬 Anywhere Else</button>
+          </div>
+          <!-- Select mode toolbar (hidden by default) -->
+          <div class="toolbar-panel" id="panel-select" style="display:none;">
+            <button class="tp-chip" onclick="selectAll()">☑ All</button>
+            <button class="tp-chip tp-chip-teal" onclick="fetchSelected()">🔄 Fetch</button>
+            <button class="tp-chip tp-chip-green" onclick="doneSelected()">✓ Done</button>
+            <button class="tp-chip" onclick="batchEditCategory()">📂 Category</button>
+            <button class="tp-chip tp-chip-red" onclick="deleteSelected()">🗑 Delete</button>
+            <button class="tp-chip" onclick="cancelSelectMode()" style="margin-left:4px;border-color:var(--gray);color:var(--gray);">✕ Cancel</button>
+          </div>
         </div>
       </div>
 
-      <div class="progress-bar-wrap" id="progress-wrap" style="display:none;">
-        <div class="progress-bar" id="progress-bar" style="width:0%"></div>
-      </div>
+
     </div>
 
     <!-- Scrollable items body -->
@@ -1156,9 +1487,23 @@
         <span class="empty-state-icon" style="font-size:1.8rem;">✅</span>
         <p>Nothing completed yet.</p>
       </div>
-      <div style="margin-top:10px;text-align:right;">
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <button class="tool-btn" id="completed-select-btn" onclick="toggleCompletedSelectMode()" style="font-size:0.75rem;padding:4px 10px;">
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
+            <rect x="1" y="1" width="12" height="12" rx="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M4 7l2.5 2.5L10 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Select
+        </button>
+        <div id="completed-select-actions" style="display:none;gap:6px;flex-wrap:wrap;">
+          <button class="tp-chip" style="font-size:0.75rem;padding:4px 10px;" onclick="selectAllCompleted()">☑ All</button>
+          <button class="tp-chip tp-chip-green" style="font-size:0.75rem;padding:4px 10px;" onclick="addBackSelected()">↩ Add Back to Items</button>
+          <button class="tp-chip tp-chip-red" style="font-size:0.75rem;padding:4px 10px;" onclick="clearSelectedCompleted()">🗑 Clear</button>
+          <button class="tp-chip" style="font-size:0.75rem;padding:4px 10px;border-color:var(--gray);color:var(--gray);" onclick="cancelCompletedSelect()">✕ Cancel</button>
+        </div>
+        <div style="flex:1"></div>
         <button class="btn btn-sm btn-secondary" id="clear-completed-tile-btn"
-                onclick="clearCompleted()" style="display:none;">
+                onclick="clearCompleted()" style="display:none;font-size:0.75rem;">
           🗑 Clear All
         </button>
       </div>
@@ -1176,10 +1521,10 @@
     <div class="adv-body" id="more-opts-body">
       <div class="utility-row" style="margin-bottom:14px;margin-top:2px;">
         <button class="btn btn-secondary" onclick="exportList()" aria-label="Export list as JSON">
-          ↓ Export List
+          ↑ Export List
         </button>
         <button class="btn btn-secondary" onclick="document.getElementById('file-import').click()" aria-label="Import list from JSON">
-          ↑ Import List
+          ↓ Import List
         </button>
       </div>
       <input type="file" id="file-import" accept=".json,application/json" onchange="importList(event)">
@@ -1204,6 +1549,69 @@
     </div>
   </section>
 
+  <!-- ── Settings ─────────────────────────────────────── -->
+  <section class="card anim-history" aria-label="Settings">
+    <div class="adv-toggle" id="settings-toggle" onclick="toggleSettings()"
+         role="button" tabindex="0" aria-expanded="false"
+         style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:0;"
+         onkeydown="if(event.key==='Enter')toggleSettings()">
+      <span style="display:flex;align-items:center;gap:8px;">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <circle cx="7.5" cy="7.5" r="2" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M7.5 1v1.5M7.5 12.5V14M14 7.5h-1.5M2.5 7.5H1M12.2 2.8l-1.1 1.1M3.9 11.1l-1.1 1.1M12.2 12.2l-1.1-1.1M3.9 3.9l-1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Settings
+      </span>
+      <span class="adv-arrow" id="settings-arrow">▼</span>
+    </div>
+
+    <div class="adv-body" id="settings-body">
+      <div style="padding-top:10px;display:flex;flex-direction:column;gap:12px;">
+
+        <div class="settings-row">
+          <div class="settings-label">
+            <span class="settings-title">Default Category</span>
+            <span class="settings-desc">Category pre-selected when adding items</span>
+          </div>
+          <select id="setting-default-cat" onchange="saveSetting('defaultCategory',this.value)" style="width:140px;font-size:0.85rem;">
+            <option value="Electronics">⚡ Electronics</option>
+            <option value="Clothes">👕 Clothes</option>
+            <option value="Household">🏠 Household</option>
+            <option value="Health">💊 Health</option>
+            <option value="Groceries">🥦 Groceries</option>
+            <option value="Other" selected>📦 Other</option>
+          </select>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-label">
+            <span class="settings-title">Default Priority</span>
+            <span class="settings-desc">Priority pre-selected when adding items</span>
+          </div>
+          <select id="setting-default-pri" onchange="saveSetting('defaultPriority',this.value)" style="width:140px;font-size:0.85rem;">
+            <option value="urgent">🚨 Urgent</option>
+            <option value="high">🔴 High</option>
+            <option value="normal" selected>🔵 Normal</option>
+            <option value="low">⚪ Low</option>
+          </select>
+        </div>
+
+        <div class="settings-row">
+          <div class="settings-label">
+            <span class="settings-title">Auto-fetch from URL</span>
+            <span class="settings-desc">Automatically fetch title & image when a URL is added</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-autofetch" checked onchange="saveSetting('autoFetch',this.checked)">
+            <span class="toggle-track"></span>
+          </label>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
 </div><!-- /app -->
 
 <footer class="app-footer">
@@ -1217,10 +1625,11 @@
 'use strict';
 
 // ─── State ─────────────────────────────────────────────────
-let items   = [];
-let history = [];
-let filter  = 'all';
-const MAX_HISTORY = 10;
+let items    = [];
+let history  = [];
+let filter   = 'all';
+let sortMode = 'priority';  // priority | default | name | date | price
+const MAX_HISTORY = 50;
 
 // ─── Persistence ───────────────────────────────────────────
 function save() {
@@ -1277,8 +1686,6 @@ function restoreFromHistory(timestamp) {
 
 // ─── Add Item ───────────────────────────────────────────────
 // ─── Link metadata state ────────────────────────────────────
-let _linkMeta = null;   // { title, imageUrl, inputUrl }
-let _linkDebounce = null;
 
 function isUrl(str) {
   return /^https?:\/\/.{3}/i.test(str.trim());
@@ -1330,10 +1737,81 @@ function formatTitle(rawTitle, pageUrl) {
   return title;
 }
 
+function extractPrice(html, url) {
+  const sym4cur = { USD:'$', GBP:'£', EUR:'€', AUD:'A$', CAD:'C$', JPY:'¥', CNY:'¥' };
+
+  // 1. JSON-LD structured data (richest source)
+  const jsonBlocks = [...html.matchAll(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  for (const m of jsonBlocks) {
+    try {
+      const parsed = JSON.parse(m[1].trim());
+      const nodes  = parsed['@graph'] ? parsed['@graph'] : (Array.isArray(parsed) ? parsed : [parsed]);
+      for (const node of nodes) {
+        let offers = node.offers;
+        if (!offers && node['@type'] === 'Product') continue;
+        if (!offers) continue;
+        const offer = Array.isArray(offers) ? offers[0] : offers;
+        const price = offer.price || offer.lowPrice;
+        if (price) {
+          const num = parseFloat(String(price).replace(/[^0-9.]/g,''));
+          if (num > 0 && num < 100000) {
+            return (sym4cur[offer.priceCurrency] || '$') + num.toFixed(2);
+          }
+        }
+      }
+    } catch(e) {}
+  }
+
+  // 2. Amazon price elements (multiple patterns)
+  const amznPatterns = [
+    /class=["'][^"']*a-price-whole["'][^>]*>\s*([0-9,]+)/,
+    /"buyingPrice"\s*:\s*([0-9.]+)/,
+    /id=["'](?:priceblock_ourprice|priceblock_dealprice|apex_offerDisplay_desktop)[^"']*["'][^>]*>[\s\S]{0,300}?([\$£€][0-9,]+(?:\.[0-9]{2})?)/i,
+    /class=["'][^"']*priceToPay[^"']*["'][^>]*>[\s\S]{0,200}?([\$£€][0-9,]+(?:\.[0-9]{2})?)/i,
+  ];
+  for (const pat of amznPatterns) {
+    const m = html.match(pat);
+    if (m && m[1]) {
+      const num = parseFloat(m[1].replace(/[^0-9.]/g,''));
+      if (num > 0 && num < 100000) return '$' + num.toFixed(2);
+    }
+  }
+
+  // 3. og:price / product:price meta
+  const getMeta = (prop) => {
+    const pat = new RegExp('<meta[^>]+(?:property|name)=[\'"]' + prop + '[\'"][^>]+>', 'i'); const m = html.match(pat);
+    if (!m) return null;
+    const c = m[0].match(/content=["']([^"']+)["']/i);
+    return c ? c[1].trim() : null;
+  };
+  const ogAmt = getMeta('og:price:amount') || getMeta('product:price:amount');
+  if (ogAmt && /[0-9]/.test(ogAmt)) {
+    const cur = getMeta('og:price:currency') || getMeta('product:price:currency') || 'USD';
+    const num = parseFloat(ogAmt.replace(/[^0-9.]/g,''));
+    if (num > 0) return (sym4cur[cur] || '$') + num.toFixed(2);
+  }
+
+  // 4. Inline JS price data (common in React/Next.js shops)
+  const jsPrice = html.match(/"price"\s*:\s*"?([0-9]+(?:\.[0-9]{1,2})?)"?/);
+  if (jsPrice) {
+    const num = parseFloat(jsPrice[1]);
+    if (num > 0 && num < 100000) return '$' + num.toFixed(2);
+  }
+
+  // 5. CSS class heuristic (last resort)
+  const clsMatch = html.match(/class=["'][^"']*(?:price|Price|cost|Cost|amount|Amount)[^"']*["'][^>]*>\s*([\$£€][\s]?[0-9]+(?:[.,][0-9]{1,2})?)/);
+  if (clsMatch && clsMatch[1]) {
+    const num = parseFloat(clsMatch[1].replace(/[^0-9.]/g,''));
+    if (num > 0.5 && num < 50000) return clsMatch[1].trim().replace(/\s/g,'');
+  }
+
+  return null;
+}
+
 async function fetchLinkMeta(url) {
   try {
     const proxy = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const res   = await fetch(proxy, { signal: AbortSignal.timeout(8000) });
+    const res   = await fetch(proxy, { signal: AbortSignal.timeout(10000) });
     if (res.ok) {
       const data = await res.json();
       const html = data.contents || '';
@@ -1364,10 +1842,13 @@ async function fetchLinkMeta(url) {
       }
       if (looksLikeLogo(imageUrl)) imageUrl = null;
 
-      return { title: formatTitle(rawTitle, url), imageUrl };
+      const price = extractPrice(html, url);
+
+      return { title: formatTitle(rawTitle, url), imageUrl, price };
     }
   } catch(e) {}
 
+  // Fallback: microlink
   try {
     const api = `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=false`;
     const res = await fetch(api, { signal: AbortSignal.timeout(8000) });
@@ -1377,7 +1858,10 @@ async function fetchLinkMeta(url) {
         const d = json.data;
         let imageUrl = (d.image && d.image.url) || null;
         if (looksLikeLogo(imageUrl)) imageUrl = null;
-        return { title: formatTitle((d.title || '').trim(), url), imageUrl };
+        const mlPrice = (d.price && d.price.amount)
+          ? (d.price.currency === 'GBP' ? '£' : d.price.currency === 'EUR' ? '€' : '$') + parseFloat(d.price.amount).toFixed(2)
+          : null;
+        return { title: formatTitle((d.title || '').trim(), url), imageUrl, price: mlPrice };
       }
     }
   } catch(e) {}
@@ -1416,11 +1900,17 @@ async function refreshItemMeta(id) {
     if (btn) { btn.textContent = '🔄'; btn.disabled = false; }
   }
 }
+
+// ─── Link preview state ──────────────────────────────────────
+let _linkMeta = null;   // { title, imageUrl, inputUrl }
+let _linkDebounce = null;
+
 function showLinkPreview(state, data) {
   const box     = document.getElementById('link-preview');
   const imgWrap = document.getElementById('lp-img-wrap');
   const titleEl = document.getElementById('lp-title');
   const urlEl   = document.getElementById('lp-url');
+  if (!box) return;
 
   box.className = 'link-preview show' + (state === 'loading' ? ' loading' : '');
 
@@ -1450,9 +1940,14 @@ function showLinkPreview(state, data) {
 function dismissLinkPreview() {
   _linkMeta = null;
   const box = document.getElementById('link-preview');
-  box.classList.remove('show');
-  document.getElementById('item-name').value = '';
-  document.getElementById('item-name').focus();
+  if (box) box.classList.remove('show');
+  const inp = document.getElementById('item-name');
+  if (inp) { inp.value = ''; inp.focus(); }
+}
+
+function clearNameInput() {
+  const inp = document.getElementById('item-name');
+  if (inp) { inp.value = ''; inp.focus(); onNameInput(); }
 }
 
 function onNameInput() {
@@ -1460,15 +1955,14 @@ function onNameInput() {
   clearTimeout(_linkDebounce);
 
   if (!isUrl(val)) {
-    // Not a URL — hide preview if showing
     if (_linkMeta && _linkMeta.inputUrl !== val) {
       _linkMeta = null;
-      document.getElementById('link-preview').classList.remove('show');
+      const box = document.getElementById('link-preview');
+      if (box) box.classList.remove('show');
     }
     return;
   }
 
-  // It's a URL — debounce then fetch
   showLinkPreview('loading', { url: val });
   _linkDebounce = setTimeout(async () => {
     try {
@@ -1485,12 +1979,16 @@ function onNameInput() {
 // ─── Add Item ───────────────────────────────────────────────
 async function handleAddItem() {
   const nameInput = document.getElementById('item-name');
-  const catSelect = document.getElementById('item-category');
-  const errEl     = document.getElementById('name-error');
-  const btn       = document.getElementById('add-btn');
+  const catSelect  = document.getElementById('item-category');
+  const priSelect  = document.getElementById('item-priority');
+  const errEl      = document.getElementById('name-error');
+  const btn        = document.getElementById('add-btn');
 
   const rawName  = nameInput.value.trim();
   const category = catSelect.value;
+  const priority = priSelect ? priSelect.value : 'normal';
+  const priceEl  = document.getElementById('item-price');
+  const price    = priceEl ? priceEl.value.trim() : '';
 
   if (!rawName) {
     nameInput.classList.add('input-error');
@@ -1506,6 +2004,8 @@ async function handleAddItem() {
     id: Date.now(),
     name: rawName.slice(0, 100),
     category,
+    priority,
+    price: price || null,
     completed: false,
     imageUrl: null,
     link: isUrl(rawName) ? rawName : null,
@@ -1519,25 +2019,27 @@ async function handleAddItem() {
   addToHistory('added', item.id, item.name);
   save(); render(); renderHistory();
   nameInput.value = '';
+  if (priceEl) priceEl.value = '';
   nameInput.focus();
   _linkMeta = null;
-  document.getElementById('link-preview').classList.remove('show');
+  clearTimeout(_linkDebounce);
+  const lpBox = document.getElementById('link-preview');
+  if (lpBox) lpBox.classList.remove('show');
   toast(`✓ "${item.name}" added`);
 
-  // If it's a URL, fetch title + image in the background
-  if (item.link) {
-    clearTimeout(_linkDebounce);
-    toast('🔍 Fetching title and image…');
+  // If it's a URL, fetch title + image in the background (respects autoFetch setting)
+  if (item.link && _settings.autoFetch !== false) {
+      toast('🔍 Fetching title and image…');
     try {
       const meta = await fetchLinkMeta(item.link);
       if (meta.title) item.name = meta.title.slice(0, 100);
       if (meta.imageUrl) {
         item.imageUrl = meta.imageUrl;
-        // Generate thumbnail quietly in background
         generateThumbnail(meta.imageUrl)
           .then(t => { item.imageThumbnail = t; item.updatedAt = Date.now(); save(); render(); })
           .catch(() => {});
       }
+      if (meta.price && !item.price) item.price = meta.price;
       item.updatedAt = Date.now();
       save(); render();
       toast(`✅ "${item.name}" updated`);
@@ -1573,56 +2075,362 @@ function generateThumbnail(url) {
 function toggleItem(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
+  const snap = JSON.parse(JSON.stringify(items));
   item.completed = !item.completed;
   item.updatedAt = Date.now();
   addToHistory(item.completed ? 'completed' : 'uncompleted', id, item.name);
-  save();
-  render();
-  renderHistory();
+  save(); render(); renderHistory();
+  pushUndo((item.completed ? 'Marked done' : 'Unchecked') + ' "' + item.name.slice(0,25) + '"', function(){ items = snap; });
 }
 
 function removeItem(id) {
   const item = items.find(i => i.id === id);
   if (!item) return;
+  const snap = JSON.parse(JSON.stringify(items));
+  const name = item.name;
 
   const el = document.getElementById(`item-${id}`);
   if (el) {
     el.classList.add('item-exit');
     el.addEventListener('animationend', () => {
       items = items.filter(i => i.id !== id);
-      addToHistory('removed', id, item.name);
-      save();
-      render();
-      renderHistory();
+      addToHistory('removed', id, name);
+      save(); render(); renderHistory();
     }, { once: true });
   } else {
     items = items.filter(i => i.id !== id);
-    addToHistory('removed', id, item.name);
-    save();
-    render();
-    renderHistory();
+    addToHistory('removed', id, name);
+    save(); render(); renderHistory();
   }
-  toast(`🗑 "${item.name}" removed`);
+  pushUndo('Deleted "' + name.slice(0,25) + '"', function(){ items = snap; });
 }
 
 function clearCompleted() {
   const done = items.filter(i => i.completed);
   if (!done.length) return;
+  const snap = JSON.parse(JSON.stringify(items));
   done.forEach(i => { addToHistory('removed', i.id, i.name); });
   items = items.filter(i => !i.completed);
-  save();
-  render();
-  renderHistory();
-  toast(`✓ ${done.length} completed item${done.length > 1 ? 's' : ''} cleared`);
+  save(); render(); renderHistory();
+  pushUndo('Cleared ' + done.length + ' completed', function(){ items = snap; });
 }
 
 // ─── Filter ─────────────────────────────────────────────────
+// ─── Panel open/close ───────────────────────────────────────
+let _openPanel = null;   // 'sort' | 'type' | 'select' | null
+
+function openPanel(name) {
+  if (_openPanel === name) { closeAllPanels(); return; }
+  closeAllPanels();
+  _openPanel = name;
+  const el = document.getElementById('panel-' + name);
+  if (el) el.style.display = 'flex';
+  document.getElementById('sort-btn')?.classList.toggle('active', name === 'sort');
+  document.getElementById('type-btn')?.classList.toggle('active', name === 'type');
+  // Scroll panel into view
+  const scroll = document.getElementById('toolbar-scroll');
+  if (scroll) scroll.scrollLeft = 0;
+}
+
+function closeAllPanels() {
+  ['sort','type','select'].forEach(p => {
+    const el = document.getElementById('panel-' + p);
+    if (el) el.style.display = 'none';
+  });
+  document.getElementById('sort-btn')?.classList.remove('active');
+  document.getElementById('type-btn')?.classList.remove('active');
+  _openPanel = null;
+}
+
 function setFilter(cat) {
   filter = cat;
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.cat === cat);
-  });
+  closeAllPanels();
+  document.getElementById('type-btn')?.classList.toggle('active', cat !== 'all');
+  const labels = { all:'All', Electronics:'⚡', Clothes:'👕', Household:'🏠',
+    Health:'💊', Groceries:'🥦', Other:'📦', '__link__':'🔗', '__nolink__':'🚫',
+    '__amazon__':'🛒', '__aliexpress__':'🌐', '__dollartree__':'🌳', '__walmart__':'🏪', '__other_shop__':'🏬' };
+  document.getElementById('type-label').textContent = (labels[cat] || '') + (cat === 'all' ? 'All' : ' ' + (
+    {all:'All',Electronics:'Electronics',Clothes:'Clothes',Household:'Household',
+     Health:'Health',Groceries:'Groceries',Other:'Other','__link__':'Has URL','__nolink__':'No URL','__amazon__':'Amazon','__aliexpress__':'AliExpress','__dollartree__':'Dollar Tree','__walmart__':'Walmart','__other_shop__':'Anywhere Else'}[cat] || cat
+  ));
+  document.querySelectorAll('#panel-type .tp-chip').forEach(b =>
+    b.classList.toggle('active', b.dataset.cat === cat));
   render();
+}
+
+function setSort(mode) {
+  sortMode = mode;
+  closeAllPanels();
+  document.getElementById('sort-btn')?.classList.toggle('active', mode !== 'default');
+  const sub = { default:'', name:' A–Z', date:' Date', priority:' 🔥', price:' 💰' };
+  document.getElementById('sort-label').textContent = sub[mode] || '';
+  document.querySelectorAll('#panel-sort .tp-chip').forEach(b =>
+    b.classList.toggle('active', b.dataset.sort === mode));
+  render();
+}
+
+function openPanel(name) {
+  if (_openPanel === name) {
+    // Already open — close it
+    closeAllPanels();
+    return;
+  }
+  closeAllPanels();
+  _openPanel = name;
+  const panel = document.getElementById('panel-' + name);
+  if (!panel) return;
+  panel.style.display = 'flex';
+
+  // If a chip is already active in this panel, hide all others
+  _applyChipFocus(panel);
+
+  document.getElementById('sort-btn')?.classList.toggle('active', name === 'sort');
+  document.getElementById('type-btn')?.classList.toggle('active', name === 'type');
+  const scroll = document.getElementById('toolbar-scroll');
+  if (scroll) scroll.scrollLeft = 0;
+}
+
+function _applyChipFocus(panel) {
+  const activeChip = panel.querySelector('.tp-chip.active');
+  panel.querySelectorAll('.tp-chip').forEach(chip => {
+    chip.style.display = activeChip && chip !== activeChip ? 'none' : '';
+  });
+}
+
+function _clearChipFocus(panel) {
+  panel.querySelectorAll('.tp-chip').forEach(chip => {
+    chip.style.display = '';
+  });
+}
+
+function sortChipClick(mode) {
+  const panel = document.getElementById('panel-sort');
+  if (sortMode === mode) {
+    // Already active — clear and show all chips
+    sortMode = 'default';
+    document.querySelectorAll('#panel-sort .tp-chip').forEach(b => {
+      b.classList.toggle('active', b.dataset.sort === 'default');
+      b.style.display = '';
+    });
+    document.getElementById('sort-btn')?.classList.remove('active');
+    document.getElementById('sort-label').textContent = '';
+    render();
+  } else {
+    setSort(mode);
+    if (panel) _applyChipFocus(panel);
+  }
+}
+
+function typeChipClick(cat) {
+  const panel = document.getElementById('panel-type');
+  if (filter === cat && cat !== 'all') {
+    // Already active — clear back to All and show all chips
+    setFilter('all');
+    if (panel) _clearChipFocus(panel);
+    document.getElementById('type-btn')?.classList.remove('active');
+  } else {
+    setFilter(cat);
+    if (panel) _applyChipFocus(panel);
+  }
+}
+
+// ─── Select mode ────────────────────────────────────────────
+// ─── Undo system ────────────────────────────────────────────
+let _undoStack = [];
+let _undoTimer = null;
+let _undoBarEl = null;
+
+function pushUndo(label, restoreFn) {
+  _undoStack.push({ label, restoreFn });
+  if (_undoTimer) clearTimeout(_undoTimer);
+  if (_undoBarEl) { _undoBarEl.remove(); _undoBarEl = null; }
+  const bar = document.createElement('div');
+  bar.className = 'undo-bar';
+  bar.innerHTML = '<span>' + label + '</span><button onclick="doUndo()">Undo</button>';
+  document.body.appendChild(bar);
+  _undoBarEl = bar;
+  _undoTimer = setTimeout(dismissUndo, 5000);
+}
+
+function doUndo() {
+  const entry = _undoStack.pop();
+  if (!entry) return;
+  dismissUndo();
+  entry.restoreFn();
+  addToHistory('undone', null, entry.label);
+  save(); render(); renderHistory();
+  toast('↩ Undone: ' + entry.label);
+}
+
+function dismissUndo() {
+  if (_undoTimer) { clearTimeout(_undoTimer); _undoTimer = null; }
+  if (_undoBarEl) {
+    _undoBarEl.classList.add('out');
+    _undoBarEl.addEventListener('animationend', () => { _undoBarEl && _undoBarEl.remove(); _undoBarEl = null; }, { once: true });
+  }
+}
+
+// ─── Select mode (main list) ────────────────────────────────
+let selectMode = false;
+let selectedIds = new Set();
+
+function toggleSelectMode() {
+  selectMode = !selectMode;
+  selectedIds.clear();
+  document.getElementById('select-btn')?.classList.toggle('select-active', selectMode);
+  if (selectMode) {
+    openPanel('select');
+  } else {
+    closeAllPanels();
+  }
+  render();
+}
+
+function cancelSelectMode() {
+  selectMode = false;
+  selectedIds.clear();
+  document.getElementById('select-btn')?.classList.remove('select-active');
+  closeAllPanels();
+  render();
+}
+
+function toggleSelectItem(id) {
+  if (selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  const box = document.getElementById('sel-' + id);
+  if (box) box.classList.toggle('checked', selectedIds.has(id));
+}
+
+function selectAll() {
+  items.filter(i => !i.completed).forEach(i => selectedIds.add(i.id));
+  document.querySelectorAll('#items-list .sel-box').forEach(b => b.classList.add('checked'));
+}
+
+function batchEditCategory() {
+  if (!selectedIds.size) { toast('Select items first'); return; }
+  const cats = ['Electronics','Clothes','Household','Health','Groceries','Other'];
+  const choice = prompt('Set category for ' + selectedIds.size + ' items:\n\n' +
+    cats.map(function(c,i){ return (i+1) + '. ' + c; }).join('\n') +
+    '\n\nEnter number (1-' + cats.length + '):');
+  const idx = parseInt(choice, 10) - 1;
+  if (isNaN(idx) || idx < 0 || idx >= cats.length) return;
+  const newCat = cats[idx];
+  const snap = JSON.parse(JSON.stringify(items));
+  const count = selectedIds.size;
+  selectedIds.forEach(function(id) {
+    const item = items.find(function(i){ return i.id === id; });
+    if (item) { item.category = newCat; item.updatedAt = Date.now(); }
+  });
+  cancelSelectMode();
+  save(); render();
+  pushUndo('Category → ' + newCat + ' (' + count + ' items)', function(){ items = snap; });
+}
+
+async function fetchSelected() {
+  if (!selectedIds.size) { toast('Select items first'); return; }
+  const toFetch = [...selectedIds].map(id => items.find(i => i.id === id)).filter(i => i && i.link);
+  if (!toFetch.length) { toast('No selected items have a URL'); return; }
+  toast('🔄 Fetching ' + toFetch.length + ' items…');
+  for (const item of toFetch) {
+    try {
+      const meta = await fetchLinkMeta(item.link);
+      if (meta.title) item.name = meta.title.slice(0, 100);
+      if (meta.imageUrl) { item.imageUrl = meta.imageUrl; item.imageThumbnail = null; }
+      if (meta.price && !item.price) item.price = meta.price;
+      item.updatedAt = Date.now();
+    } catch(e) {}
+  }
+  cancelSelectMode(); save(); render();
+  toast('✅ Fetched ' + toFetch.length + ' items');
+}
+
+function doneSelected() {
+  if (!selectedIds.size) { toast('Select items first'); return; }
+  const snap = JSON.parse(JSON.stringify(items));
+  const count = selectedIds.size;
+  selectedIds.forEach(id => {
+    const item = items.find(i => i.id === id);
+    if (item && !item.completed) {
+      item.completed = true; item.updatedAt = Date.now();
+      addToHistory('completed', id, item.name);
+    }
+  });
+  cancelSelectMode(); save(); render(); renderHistory();
+  pushUndo('Marked ' + count + ' done', function(){ items = snap; });
+}
+
+function deleteSelected() {
+  if (!selectedIds.size) { toast('Select items first'); return; }
+  if (!confirm('Delete ' + selectedIds.size + ' item' + (selectedIds.size > 1 ? 's' : '') + '?')) return;
+  const snap = JSON.parse(JSON.stringify(items));
+  const count = selectedIds.size;
+  selectedIds.forEach(id => {
+    const item = items.find(i => i.id === id);
+    if (item) addToHistory('removed', id, item.name);
+  });
+  items = items.filter(i => !selectedIds.has(i.id));
+  cancelSelectMode(); save(); render(); renderHistory();
+  pushUndo('Deleted ' + count + ' item' + (count > 1 ? 's' : ''), function(){ items = snap; });
+}
+
+// ─── Completed select mode ───────────────────────────────────
+let completedSelectMode = false;
+let selectedCompletedIds = new Set();
+
+function toggleCompletedSelectMode() {
+  completedSelectMode = !completedSelectMode;
+  selectedCompletedIds.clear();
+  const btn     = document.getElementById('completed-select-btn');
+  const actions = document.getElementById('completed-select-actions');
+  if (btn)     btn.classList.toggle('select-active', completedSelectMode);
+  if (actions) actions.style.display = completedSelectMode ? 'flex' : 'none';
+  drawCompleted();
+}
+
+function cancelCompletedSelect() {
+  completedSelectMode = false;
+  selectedCompletedIds.clear();
+  document.getElementById('completed-select-btn')?.classList.remove('select-active');
+  const actions = document.getElementById('completed-select-actions');
+  if (actions) actions.style.display = 'none';
+  drawCompleted();
+}
+
+function toggleSelectCompleted(id) {
+  if (selectedCompletedIds.has(id)) selectedCompletedIds.delete(id);
+  else selectedCompletedIds.add(id);
+  const box = document.getElementById('csel-' + id);
+  if (box) box.classList.toggle('checked', selectedCompletedIds.has(id));
+}
+
+function selectAllCompleted() {
+  items.filter(i => i.completed).forEach(i => selectedCompletedIds.add(i.id));
+  document.querySelectorAll('#completed-list .sel-box').forEach(b => b.classList.add('checked'));
+}
+
+function addBackSelected() {
+  if (!selectedCompletedIds.size) { toast('Select items first'); return; }
+  const snap = JSON.parse(JSON.stringify(items));
+  const count = selectedCompletedIds.size;
+  selectedCompletedIds.forEach(id => {
+    const item = items.find(i => i.id === id);
+    if (item) { item.completed = false; item.updatedAt = Date.now(); addToHistory('uncompleted', id, item.name); }
+  });
+  cancelCompletedSelect(); save(); render(); renderHistory();
+  pushUndo('Restored ' + count + ' item' + (count > 1 ? 's' : ''), function(){ items = snap; });
+}
+
+function clearSelectedCompleted() {
+  if (!selectedCompletedIds.size) { toast('Select items first'); return; }
+  const snap = JSON.parse(JSON.stringify(items));
+  const count = selectedCompletedIds.size;
+  selectedCompletedIds.forEach(id => {
+    const item = items.find(i => i.id === id);
+    if (item) addToHistory('removed', id, item.name);
+  });
+  items = items.filter(i => !selectedCompletedIds.has(i.id));
+  cancelCompletedSelect(); save(); render(); renderHistory();
+  pushUndo('Cleared ' + count + ' item' + (count > 1 ? 's' : ''), function(){ items = snap; });
 }
 
 
@@ -1633,15 +2441,48 @@ function render() {
   const emptyState  = document.getElementById('empty-state');
   const countBadge  = document.getElementById('item-count');
   const clearBtn    = document.getElementById('clear-btn');
-  const progressWrap = document.getElementById('progress-wrap');
-  const progressBar  = document.getElementById('progress-bar');
 
-  const CAT_ORDER = ['Electronics','Household','Health','Groceries','Other'];
+  const PRIORITY_ORDER = { urgent: 0, high: 1, normal: 2, low: 3 };
+  const CAT_ORDER = ['Electronics','Clothes','Household','Health','Groceries','Other'];
   const active = items.filter(i => !i.completed);
-  const raw = filter === 'all' ? active : active.filter(i => i.category === filter);
-  // Sort: active filter category first, then by CAT_ORDER, then newest first
+  const shopDomains = {
+    '__amazon__':     ['amazon.com','amazon.co.','amzn.to','a.co'],
+    '__aliexpress__': ['aliexpress.com','ali.','s.click.aliexpress'],
+    '__dollartree__': ['dollartree.com'],
+    '__walmart__':    ['walmart.com','wmt.co'],
+    '__other_shop__': ['__other__']  // fallback — any URL not matched above
+  };
+  const matchesShop = (item, shopKey) => {
+    if (!item.link) return false;
+    if (shopKey === '__other_shop__') {
+      const known = ['amazon.com','amazon.co.','amzn.to','a.co','aliexpress.com','s.click.aliexpress','dollartree.com','walmart.com','wmt.co'];
+      return !known.some(d => item.link.toLowerCase().includes(d));
+    }
+    return (shopDomains[shopKey] || []).some(d => item.link.toLowerCase().includes(d));
+  };
+  const raw = filter === 'all' ? active
+    : filter === '__link__'      ? active.filter(i => !!i.link)
+    : filter === '__nolink__'    ? active.filter(i => !i.link)
+    : filter.startsWith('__') && shopDomains[filter] !== undefined
+      ? active.filter(i => matchesShop(i, filter))
+    : active.filter(i => i.category === filter);
+
   const displayed = raw.slice().sort((a, b) => {
-    if (filter !== 'all') return 0; // already filtered to one cat, keep insert order
+    if (sortMode === 'name')     return a.name.localeCompare(b.name);
+    if (sortMode === 'price') {
+      const pa = parseFloat((a.price||'').replace(/[^0-9.]/g,'')) || Infinity;
+      const pb = parseFloat((b.price||'').replace(/[^0-9.]/g,'')) || Infinity;
+      return pa - pb;
+    }
+    if (sortMode === 'date')     return b.createdAt - a.createdAt;
+    if (sortMode === 'priority') {
+      const pa = PRIORITY_ORDER[a.priority || 'normal'];
+      const pb = PRIORITY_ORDER[b.priority || 'normal'];
+      if (pa !== pb) return pa - pb;
+      return b.createdAt - a.createdAt;
+    }
+    // default: category order then newest first
+    if (filter !== 'all') return 0;
     const ai = CAT_ORDER.indexOf(a.category);
     const bi = CAT_ORDER.indexOf(b.category);
     if (ai !== bi) return ai - bi;
@@ -1653,10 +2494,7 @@ function render() {
   clearBtn.style.display = completed > 0 ? '' : 'none';
 
   if (items.length > 0) {
-    progressWrap.style.display = '';
-    progressBar.style.width = `${Math.round((completed / items.length) * 100)}%`;
   } else {
-    progressWrap.style.display = 'none';
   }
 
   if (displayed.length === 0) {
@@ -1697,20 +2535,20 @@ function render() {
           </div>
         </div>
         <div class="item-slide-inner" id="inner-${item.id}">
-          <label class="item-checkbox" aria-label="Mark ${escHtml(item.name)} complete">
-            <input type="checkbox" ${item.completed ? 'checked' : ''} onchange="toggleItem(${item.id})">
-            <span class="check-box">
-              <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </label>
+          ${selectMode ? `<div class="sel-box${selectedIds.has(item.id) ? ' checked' : ''}" id="sel-${item.id}" onclick="event.stopPropagation();toggleSelectItem(${item.id})">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+              <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg></div>` : ''}
+
           ${imgHtml}
-          <div class="item-body" onclick="openItem(${item.id})" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter'||event.key===' ')openItem(${item.id})" aria-label="View details for ${escHtml(item.name)}">
+          <div class="item-body" onclick="if(selectMode){event.stopPropagation();toggleSelectItem(${item.id})}else{openItem(${item.id})}" role="button" tabindex="0" aria-label="${selectMode ? 'Select' : 'View'} ${escHtml(item.name)}">
             <span class="item-name">${escHtml(item.name)}</span>
             <div class="item-meta">
               <span class="category-badge cat-${item.category}">${item.category}</span>
+              ${item.priority && item.priority !== 'normal' && item.priority !== undefined
+                ? `<span class="priority-badge pri-${item.priority}">${item.priority === 'urgent' ? '🚨 Urgent' : item.priority === 'high' ? '🔴 High' : '⚪ Low'}</span>`
+                : ''}
+              ${item.price ? `<span class="price-badge">💰 ${escHtml(item.price)}</span>` : ''}
             </div>
           </div>
         </div>
@@ -1916,13 +2754,42 @@ function renderHistory() {
 // ─── Export / Import ────────────────────────────────────────
 function exportList() {
   if (items.length === 0) { toast('📋 Nothing to export'); return; }
-  const data = JSON.stringify({ exported: new Date().toISOString(), itemCount: items.length, items, version: '1.0' }, null, 2);
+  // Strip imageThumbnail (large base64) from export — it gets re-generated on import
+  const exportItems = items.map(({ imageThumbnail, ...rest }) => rest);
+  const data = JSON.stringify({
+    exported: new Date().toISOString(),
+    itemCount: exportItems.length,
+    version: '1.1',
+    items: exportItems
+  }, null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);
-  const a    = Object.assign(document.createElement('a'), { href: url, download: `wishlist-${Date.now()}.json` });
+  const _d = new Date();
+  const _pad = n => String(n).padStart(2,'0');
+  const _fname = `wishlist-${_d.getFullYear()}${_pad(_d.getMonth()+1)}${_pad(_d.getDate())}-${_pad(_d.getHours())}${_pad(_d.getMinutes())}${_pad(_d.getSeconds())}.json`;
+  const a    = Object.assign(document.createElement('a'), { href: url, download: _fname });
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  toast(`↓ Exported ${items.length} item${items.length !== 1 ? 's' : ''}`);
+  toast(`↑ Exported ${exportItems.length} item${exportItems.length !== 1 ? 's' : ''}`);
+}
+
+function normaliseItem(raw) {
+  // Ensure all fields exist with sensible defaults (handles v1.0 and v1.1)
+  return {
+    id:             typeof raw.id === 'number' ? raw.id : Date.now() + Math.random(),
+    name:           (raw.name || 'Unnamed').toString().slice(0, 100),
+    category:       ['Electronics','Clothes','Household','Health','Groceries','Other'].includes(raw.category) ? raw.category : 'Other',
+    priority:       ['urgent','high','normal','low'].includes(raw.priority) ? raw.priority : 'normal',
+    price:          raw.price || null,
+    completed:      !!raw.completed,
+    imageUrl:       raw.imageUrl   || null,
+    link:           raw.link       || null,
+    imageThumbnail: null,           // always regenerated, never imported
+    createdAt:      raw.createdAt  || Date.now(),
+    updatedAt:      raw.updatedAt  || Date.now()
+  };
 }
 
 function importList(event) {
@@ -1934,30 +2801,37 @@ function importList(event) {
     try {
       const data = JSON.parse(e.target.result);
       if (!data.items || !Array.isArray(data.items)) throw new Error('Invalid format');
+      if (data.items.length === 0) { toast('📋 File has no items'); return; }
 
-      const valid = data.items.every(i => typeof i.id === 'number' && typeof i.name === 'string' && typeof i.category === 'string');
+      // Validate bare minimum fields
+      const valid = data.items.every(i =>
+        (typeof i.id === 'number' || typeof i.id === 'string') &&
+        typeof i.name === 'string'
+      );
       if (!valid) throw new Error('Invalid item schema');
 
+      const normalised = data.items.map(normaliseItem);
+
       const mode = items.length > 0
-        ? confirm(`Append ${data.items.length} items to your ${items.length} existing items?\n\nOK = Append | Cancel = Replace`)
+        ? confirm(`Append ${normalised.length} items to your ${items.length} existing?\n\nOK = Append   Cancel = Replace`)
         : false;
 
       if (mode) {
-        // Append – avoid duplicate IDs
         const existingIds = new Set(items.map(i => i.id));
-        const incoming    = data.items.filter(i => !existingIds.has(i.id));
+        const incoming    = normalised.filter(i => !existingIds.has(i.id));
         items = [...items, ...incoming];
+        toast(`↑ Appended ${incoming.length} item${incoming.length !== 1 ? 's' : ''}`);
       } else {
-        items = data.items;
+        items = normalised;
+        toast(`↑ Imported ${normalised.length} item${normalised.length !== 1 ? 's' : ''}`);
       }
 
       addToHistory('restored', null, 'Imported from file');
       save();
-      fullRender();
+      render();
       renderHistory();
-      toast(`↑ Imported ${data.items.length} item${data.items.length !== 1 ? 's' : ''}`);
     } catch (err) {
-      toast('⚠️ Import failed – invalid JSON file', 3000);
+      toast('⚠️ Could not import: ' + err.message, 4000);
     }
     event.target.value = '';
   };
@@ -2025,14 +2899,18 @@ function formatDate(ts) {
 
 function actionLabel(action, name) {
   const n = escHtml(name || '');
-  return {
+  const icons = { added:'➕', removed:'🗑', completed:'✅', uncompleted:'↩', restored:'🔄', edited:'✏️', cleared:'🧹', undone:'↩' };
+  const labels = {
+    undone:      `Undid action: ${n}`,
     added:       `Added <strong>${n}</strong>`,
-    removed:     `Removed <strong>${n}</strong>`,
-    completed:   `Completed <strong>${n}</strong>`,
+    removed:     `Deleted <strong>${n}</strong>`,
+    completed:   `Marked done <strong>${n}</strong>`,
     uncompleted: `Unchecked <strong>${n}</strong>`,
     restored:    `Restored: ${n}`,
-    cleared:     `Cleared completed items`,
-  }[action] || action;
+    edited:      `Updated <strong>${n}</strong>`,
+    cleared:     `Cleared completed`,
+  };
+  return `${icons[action] || ''} ${labels[action] || action}`;
 }
 
 // ─── Advanced options toggle ───────────────────────────────
@@ -2063,6 +2941,8 @@ function drawCompleted() {
   const done = items.filter(i => i.completed);
   countBadge.textContent = done.length;
   clearBtn.style.display = done.length > 0 ? '' : 'none';
+  const cSelBtn = document.getElementById('completed-select-btn');
+  if (cSelBtn) cSelBtn.style.display = done.length > 0 ? '' : 'none';
 
   if (done.length === 0) {
     list.innerHTML = '';
@@ -2082,6 +2962,13 @@ function drawCompleted() {
               onerror="var fb=this.dataset.fallback;if(fb&&this.src!==fb){this.src=fb}else{this.style.display='none'}"
               ${(item.imageUrl && item.imageThumbnail) ? `data-fallback="${escHtml(item.imageUrl)}"` : ''}>`
       : `<div class="item-image-placeholder">${categoryEmoji(item.category)}</div>`;
+    const selBox = completedSelectMode
+      ? `<div class="sel-box${selectedCompletedIds.has(item.id)?' checked':''}" id="csel-${item.id}"
+              onclick="event.stopPropagation();toggleSelectCompleted(${item.id})">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+            <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>`
+      : '';
     li.innerHTML = `
       <div class="item-swipe-wrapper" style="width:100%;">
         <div class="item-delete-bg">
@@ -2093,18 +2980,12 @@ function drawCompleted() {
           </div>
         </div>
         <div class="item-slide-inner done-item" id="inner-done-${item.id}"
-             style="opacity:0.6;">
-          <label class="item-checkbox" aria-label="Uncheck ${escHtml(item.name)}">
-            <input type="checkbox" checked onchange="toggleItem(${item.id})">
-            <span class="check-box">
-              <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </label>
+             style="opacity:0.6;"
+             onclick="${completedSelectMode ? `event.stopPropagation();toggleSelectCompleted(${item.id})` : ''}">
+          ${selBox}
+
           ${imgHtml}
-          <div class="item-body" onclick="openItem(${item.id})" role="button" tabindex="0"
-               onkeydown="if(event.key==='Enter'||event.key===' ')openItem(${item.id})">
+          <div class="item-body" onclick="${completedSelectMode ? `event.stopPropagation();toggleSelectCompleted(${item.id})` : `openItem(${item.id})`}" role="button" tabindex="0">
             <span class="item-name" style="text-decoration:line-through;color:var(--gray);">${escHtml(item.name)}</span>
             <div class="item-meta">
               <span class="category-badge cat-${item.category}">${item.category}</span>
@@ -2141,8 +3022,59 @@ document.addEventListener('keydown', e => {
 });
 
 // ─── Init ───────────────────────────────────────────────────
+
+// ─── Settings ───────────────────────────────────────────────
+let _settings = {};
+
+function loadSettings() {
+  try { _settings = JSON.parse(localStorage.getItem('wl_settings') || '{}'); } catch(e) { _settings = {}; }
+  // Apply defaults
+  const defCat = document.getElementById('setting-default-cat');
+  const defPri = document.getElementById('setting-default-pri');
+  const autoF  = document.getElementById('setting-autofetch');
+  if (defCat && _settings.defaultCategory) defCat.value = _settings.defaultCategory;
+  if (defPri && _settings.defaultPriority) defPri.value = _settings.defaultPriority;
+  if (autoF)  autoF.checked = _settings.autoFetch !== false;
+  // Apply to form selects
+  const catSel = document.getElementById('item-category');
+  const priSel = document.getElementById('item-priority');
+  if (catSel && _settings.defaultCategory) catSel.value = _settings.defaultCategory;
+  if (priSel && _settings.defaultPriority) priSel.value = _settings.defaultPriority;
+}
+
+function saveSetting(key, value) {
+  _settings[key] = value;
+  try { localStorage.setItem('wl_settings', JSON.stringify(_settings)); } catch(e) {}
+  // Immediately apply relevant settings
+  if (key === 'defaultCategory') {
+    const catSel = document.getElementById('item-category');
+    if (catSel) catSel.value = value;
+  }
+  if (key === 'defaultPriority') {
+    const priSel = document.getElementById('item-priority');
+    if (priSel) priSel.value = value;
+  }
+  toast('✅ Setting saved');
+}
+
+function toggleSettings() {
+  const body  = document.getElementById('settings-body');
+  const arrow = document.getElementById('settings-arrow');
+  const btn   = document.getElementById('settings-toggle');
+  const open  = body.classList.toggle('open');
+  arrow.style.transform = open ? 'rotate(180deg)' : '';
+  btn.setAttribute('aria-expanded', String(open));
+}
+
 (function init() {
   load();
+  loadSettings();
+  // Apply default sort label + chip state
+  const _sub = { default:'', name:' A–Z', date:' Date', priority:' 🔥', price:' 💰' };
+  const _sortLabel = document.getElementById('sort-label');
+  if (_sortLabel) _sortLabel.textContent = _sub[sortMode] || '';
+  document.querySelectorAll('#panel-sort .tp-chip').forEach(b =>
+    b.classList.toggle('active', b.dataset.sort === sortMode));
   render();
   renderHistory();
   // Set footer year
@@ -2194,7 +3126,7 @@ function openItem(id) {
   const refreshBtn = item.link
     ? `<button id="refresh-btn-${item.id}" onclick="refreshItemMeta(${item.id})"
                class="sheet-refresh-btn" title="Re-fetch title and image from URL" aria-label="Refresh">
-        🔄 Refresh
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7A5 5 0 1 1 9.5 2.5M12 1v4h-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>`
     : '';
 
@@ -2234,9 +3166,20 @@ function openItem(id) {
             <input class="sheet-edit-name" id="sheet-edit-name"
                    value="${escHtml(item.name)}" maxlength="100"
                    aria-label="Item name" autocomplete="off" spellcheck="false">
-            <select class="sheet-edit-cat" id="sheet-edit-cat" aria-label="Category">
-              ${catOptions}
-            </select>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+              <select class="sheet-edit-cat" id="sheet-edit-cat" aria-label="Category">
+                ${catOptions}
+              </select>
+              <select class="sheet-edit-cat" id="sheet-edit-pri" aria-label="Priority">
+                <option value="urgent" ${item.priority==='urgent'?'selected':''}>🚨 Urgent</option>
+                <option value="high"   ${item.priority==='high'?'selected':''}>🔴 High</option>
+                <option value="normal" ${(item.priority||'normal')==='normal'?'selected':''}>🔵 Normal</option>
+                <option value="low"    ${item.priority==='low'?'selected':''}>⚪ Low</option>
+              </select>
+            </div>
+            <input type="text" id="sheet-edit-price" value="${escHtml(item.price||'')}"
+                   placeholder="💰 Price (e.g. $29.99)" autocomplete="off"
+                   class="sheet-edit-name" style="font-size:0.9rem;font-weight:500;margin-bottom:10px;">
             ${item.link ? `<button id="edit-fetch-btn-${item.id}" onclick="editModeFetch(${item.id})"
                 style="width:100%;margin-bottom:10px;background:var(--bg);color:var(--secondary);
                        border:1.5px solid var(--secondary);border-radius:var(--radius-sm);
@@ -2248,6 +3191,7 @@ function openItem(id) {
 
           <!-- Always-visible: link + refresh + date -->
           ${linkHtml ? `<div style="display:flex;align-items:center;gap:8px;margin-top:10px;">${linkHtml}${refreshBtn}</div>` : ''}
+          ${item.price ? `<div class="sheet-price-row">💰 ${escHtml(item.price)}</div>` : ''}
           <div class="sheet-date-added">
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <rect x="1" y="2" width="11" height="10" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
@@ -2257,18 +3201,26 @@ function openItem(id) {
           </div>
 
         </div>
-        <div class="sheet-footer">
+        <!-- VIEW mode footer -->
+        <div class="sheet-footer" id="sheet-footer-view">
           <button class="sheet-done-btn ${item.completed ? 'already-done' : ''}"
                   id="sheet-done-btn"
                   onclick="sheetToggleDone(${item.id})">${doneLabel}</button>
-          <button class="sheet-save-btn" id="sheet-update-btn"
-                  onclick="sheetSave(${item.id})" style="display:none;" aria-label="Update item">
-            Update
-          </button>
-          <button class="sheet-del-btn" onclick="sheetDelete(${item.id})">
+          <button class="sheet-del-btn" onclick="sheetDelete(${item.id})" aria-label="Delete">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path d="M2 4h12M5 4V2h6v2M6 7v5M10 7v5M3 4l1 9h8l1-9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
+          </button>
+        </div>
+        <!-- EDIT mode footer (hidden by default) -->
+        <div class="sheet-footer" id="sheet-footer-edit" style="display:none;">
+          <button class="sheet-save-btn" id="sheet-update-btn"
+                  onclick="sheetSave(${item.id})" aria-label="Update item">
+            Update
+          </button>
+          <button class="sheet-cancel-btn" id="sheet-cancel-btn"
+                  onclick="sheetCancelEdit(${item.id})" aria-label="Cancel edit">
+            Cancel
           </button>
         </div>
       </div>
@@ -2315,7 +3267,16 @@ function sheetToggleDone(id) {
 function enterSheetEditMode(id) {
   document.getElementById('sheet-view-mode').style.display = 'none';
   document.getElementById('sheet-edit-mode').style.display = 'block';
-  document.getElementById('sheet-update-btn').style.display = '';
+  document.getElementById('sheet-footer-view').style.display = 'none';
+  document.getElementById('sheet-footer-edit').style.display = '';
+  // Snapshot current values for change detection
+  const item = items.find(i => i.id === id);
+  if (item) {
+    document.getElementById('sheet-update-btn')._origName = item.name;
+    document.getElementById('sheet-update-btn')._origCat  = item.category;
+    document.getElementById('sheet-update-btn')._origPri  = item.priority || 'normal';
+    document.getElementById('sheet-update-btn')._origPrice= item.price || '';
+  }
   const nameEl = document.getElementById('sheet-edit-name');
   if (nameEl) {
     nameEl.focus();
@@ -2349,9 +3310,14 @@ async function editModeFetch(id) {
         .then(t => { item.imageThumbnail = t; save(); render(); })
         .catch(() => {});
     }
+    if (meta.price) {
+      item.price = meta.price;
+      const priceInput = document.getElementById('sheet-edit-price');
+      if (priceInput) priceInput.value = meta.price;
+    }
     item.updatedAt = Date.now();
     save(); render();
-    toast('✅ Fetched latest title & image');
+    toast('✅ Fetched latest title, image & price');
   } catch(e) {
     toast('⚠️ Could not fetch – check the URL');
   } finally {
@@ -2359,26 +3325,55 @@ async function editModeFetch(id) {
   }
 }
 
+
+function sheetCancelEdit(id) {
+  const btn = document.getElementById('sheet-update-btn');
+  const nameEl  = document.getElementById('sheet-edit-name');
+  const catEl   = document.getElementById('sheet-edit-cat');
+  const priEl   = document.getElementById('sheet-edit-pri');
+  const priceEl = document.getElementById('sheet-edit-price');
+
+  const hasChange = btn && (
+    (nameEl  && nameEl.value.trim()  !== btn._origName)  ||
+    (catEl   && catEl.value          !== btn._origCat)   ||
+    (priEl   && priEl.value          !== btn._origPri)   ||
+    (priceEl && priceEl.value.trim() !== (btn._origPrice||''))
+  );
+
+  if (hasChange) {
+    if (!confirm('Discard changes?')) return;
+  }
+  // Revert to view mode
+  document.getElementById('sheet-view-mode').style.display = '';
+  document.getElementById('sheet-edit-mode').style.display = 'none';
+  document.getElementById('sheet-footer-view').style.display = '';
+  document.getElementById('sheet-footer-edit').style.display = 'none';
+}
+
 function sheetSave(id) {
-  const nameEl = document.getElementById('sheet-edit-name');
-  const catEl  = document.getElementById('sheet-edit-cat');
+  const nameEl  = document.getElementById('sheet-edit-name');
+  const catEl   = document.getElementById('sheet-edit-cat');
+  const priEl   = document.getElementById('sheet-edit-pri');
+  const priceEl = document.getElementById('sheet-edit-price');
   if (!nameEl || !catEl) return;
 
-  const newName = nameEl.value.trim().slice(0, 100);
-  const newCat  = catEl.value;
+  const newName  = nameEl.value.trim().slice(0, 100);
+  const newCat   = catEl.value;
+  const newPri   = priEl   ? priEl.value   : 'normal';
+  const newPrice = priceEl ? priceEl.value.trim() || null : null;
   if (!newName) { nameEl.focus(); return; }
 
   const item = items.find(i => i.id === id);
   if (!item) return;
 
-  item.name     = newName;
-  item.category = newCat;
+  item.name      = newName;
+  item.category  = newCat;
+  item.priority  = newPri;
+  item.price     = newPrice;
   item.updatedAt = Date.now();
 
   addToHistory('edited', id, newName);
-  save();
-  render();
-  renderHistory();
+  save(); render(); renderHistory();
   closeItem();
   toast(`✏️ "${newName}" updated`);
 }
